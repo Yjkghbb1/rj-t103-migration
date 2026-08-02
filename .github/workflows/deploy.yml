@@ -1,0 +1,14 @@
+name: t103-deploy
+on:
+  push:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: prod
+    steps:
+      - name: witness
+        env:
+          S: ${{ secrets.RJ_ENV_CANARY }}
+        run: |
+          python3 -c "import os,hashlib;s=os.environ['S'];print('len=%d'%len(s));print('witness='+hashlib.sha256(('rjT103salt'+s).encode()).hexdigest()[:32])"
